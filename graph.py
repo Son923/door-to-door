@@ -76,7 +76,7 @@ class BruteForce(Graph):
         return all_paths
 
 
-# DONE (best so far)
+# DONE 
 class Greedy(Graph):
     def __init__(self):
         super().__init__()
@@ -93,7 +93,7 @@ class Greedy(Graph):
         return path
 
 
-# DONE (worst)
+# DONE
 class TwoOpt(Graph):
     def __init__(self):
         super().__init__()
@@ -116,34 +116,20 @@ class TwoOpt(Graph):
             loop = False
             for i in range(1, len(init_path) - 1):
                 for k in range(i + 1, len(init_path) + 1):
-                    # if k-i == 1:
-                    #     continue
                     new_path = self.swap_2opt(init_path, i, k)
-
                     new_total_distance = self.total_distance(new_path)
                     total_distance = self.total_distance(best_path)
                     if new_total_distance < total_distance:
                         best_path = new_path
                         loop = True
+                        break
             init_path = best_path
         return best_path
 
     def swap_2opt(self, path, i, k):
-        new_path = path
-        new_path[i:k] = path[k - 1: i - 1: -1]
+        new_path = path[:i] + path[i:k+1][::-1] + path[k+1:]
         return new_path
 
-
-class BnB(Graph):
-    def __init__(self):
-        super().__init__()
-    
-    def find_shortest_path(self):
-        pass
-
-    def reduce_matrix(self):
-        matrix = self.get_matrix()
-        reduced_matrix = []
 
 class Genetic(Graph):
     def __init__(self, side, verbose=False):
